@@ -5,12 +5,20 @@ class SocketClient {
   static SocketClient? _instance;
 
   SocketClient._internal() {
-    socket = IO.io('http://localhost:3000', <String, dynamic>{
+    String serverPath =
+        'https://tic-tac-toe-multiplayer-realtime-game.onrender.com/';
+
+    socket = IO.io(serverPath, <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false,
     });
 
-    if (socket != null) {
+    print('** Client Socket request to $serverPath **');
+
+    if (socket == null) {
+      print('** Client Failed to Connect to Sockets ***');
+      return;
+    } else {
       print('** Client Connected to Sockets ***');
     }
     socket!.connect();
